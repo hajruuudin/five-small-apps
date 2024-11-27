@@ -7,11 +7,12 @@ import './index.css'
 // Components:
 import Homepage from './routes/root'
 import ErrorPage from './routes/error'
-import TaskManager from './routes/taskmanager/task-root'
+import TaskManager, {loader as taskManagerLoader} from './routes/taskmanager/task-root'
 import TicTacToe from './routes/tictactoe/ttt-root'
 import QuizApplication from './routes/quiz/quiz-root'
 import TaskIndex from './routes/taskmanager/task-index'
-import TaskList from './routes/taskmanager/components/task-list'
+import TaskList, {loader as taskListLoader} from './routes/taskmanager/components/task-list'
+import TaskAddForm from './routes/taskmanager/components/task-add'
 
 const router = createBrowserRouter([
   {
@@ -22,12 +23,18 @@ const router = createBrowserRouter([
   {
     path: "/taskmanager",
     element: <TaskManager/>,
+    loader: taskManagerLoader,
     errorElement: <ErrorPage/>,
     children: [
       {index: true, element: <TaskIndex/>},
       {
-        path: ":list",
-        element: <TaskList/>
+        path: ":listId",
+        element: <TaskList/>,
+        loader: taskListLoader
+      },
+      {
+        path: ":listId/addTask",
+        element: <TaskAddForm />
       }
     ]
   },
