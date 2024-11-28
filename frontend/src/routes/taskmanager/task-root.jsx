@@ -11,7 +11,7 @@ export default function TaskManager(){
     const { lists } = useLoaderData();    
 
     return(
-        <main className="w-full h-full flex flex-row justify-center items-center montserrat-regular ">
+        <main className="w-full h-full flex flex-row justify-center items-center montserrat-regular">
             <Sidebar allLists = {lists}/>
             <Main/>
         </main>

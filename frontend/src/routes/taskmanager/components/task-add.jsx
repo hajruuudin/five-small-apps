@@ -1,4 +1,5 @@
 import { Form, useParams, redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export async function action({request, params}){
     const formData = await request.formData();
@@ -26,12 +27,12 @@ export async function action({request, params}){
         }
     }
 
+    toast("Task added")
     localStorage.setItem("taskManager", JSON.stringify(storageTasks))
     return redirect(`/taskmanager/${listId}`)
 }
 
 export default function TaskAddForm(){
-    const {listId} = useParams()
     return(
         <Form method="post" className="flex flex-col justify-center items-center w-9/12">
             <h1 className="text-3xl mb-12">Add task to list:</h1>
