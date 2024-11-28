@@ -12,7 +12,8 @@ import TicTacToe from './routes/tictactoe/ttt-root'
 import QuizApplication from './routes/quiz/quiz-root'
 import TaskIndex from './routes/taskmanager/task-index'
 import TaskList, {loader as taskListLoader} from './routes/taskmanager/components/task-list'
-import TaskAddForm from './routes/taskmanager/components/task-add'
+import TaskAddForm, {action as taskAddAction} from './routes/taskmanager/components/task-add'
+import ListAddForm, {action as listAddAction} from './routes/taskmanager/components/task-list-add'
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,16 @@ const router = createBrowserRouter([
       },
       {
         path: ":listId/addTask",
-        element: <TaskAddForm />
+        element: <TaskAddForm />,
+        action: taskAddAction
+      },
+      {
+        path: "addList",
+        element: <ListAddForm />,
+        action: listAddAction
+      },
+      {
+        // TODO: DELETE ROUTE
       }
     ]
   },
