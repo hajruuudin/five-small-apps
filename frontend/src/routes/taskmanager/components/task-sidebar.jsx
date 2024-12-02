@@ -24,8 +24,8 @@ export default function Sidebar({allLists}){
                     Object.values(allLists).map(list => {
                         return (
                             <NavLink
-                                key={list.id}
-                                to={`/taskmanager/${list.id}`}
+                                key={list._id}
+                                to={`/taskmanager/${list._id}`}
                                 className={({ isActive }) => {
                                     if (isActive) {
                                         return "flex justify-between items-center w-full mt-1 mb-1 pb-1 font-bold text-grey-600";
