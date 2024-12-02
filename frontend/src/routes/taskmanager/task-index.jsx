@@ -1,4 +1,23 @@
 export default function TaskIndex(){
+    const backendTestOne = async () => {
+        fetch("/backend/tasks")
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
+
+    const backendTestTwo = async () => {
+        fetch("/backend/lists")
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
     return(
         <>
             <h1 className="text-5xl montserrat-bold m-3">Task manager app!</h1>
@@ -11,6 +30,8 @@ export default function TaskIndex(){
                 <li>- Basic CRUD operation for tasks -</li>
             </ul>
             <p className="mt-10 montserrat-bold">Click on a list to get started!</p>
+            <button className="bg-indigo-400 w-64 h-16 rounded-xl" onClick={() => backendTestOne()}>Get Tasks</button>
+            <button className="bg-indigo-400 w-64 h-16 rounded-xl" onClick={() => backendTestTwo()}>Get Lists</button>
         </>
     )
 }

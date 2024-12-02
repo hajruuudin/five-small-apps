@@ -15,7 +15,6 @@ import TaskList, {loader as taskListLoader} from './routes/taskmanager/component
 import TaskAddForm, {action as taskAddAction} from './routes/taskmanager/components/task-add'
 import ListAddForm, {action as listAddAction} from './routes/taskmanager/components/task-list-add'
 import ListDeleteForm, {action as deleteAction} from './routes/taskmanager/components/task-list-delete'
-import { Slide, ToastContainer, toast } from 'react-toastify'
 
 const router = createBrowserRouter([
   {
@@ -72,18 +71,5 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router}/>
-    <ToastContainer
-      position="top-right"
-      autoClose={2000}
-      hideProgressBar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="dark"
-      transition={Slide}
-      />
   </StrictMode>,
 )

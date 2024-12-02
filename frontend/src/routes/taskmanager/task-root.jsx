@@ -3,8 +3,9 @@ import Main from "./components/task-main";
 import Sidebar from "./components/task-sidebar";
 
 export async function loader(){
-    const lists = await JSON.parse(localStorage.getItem("taskManager"));
-    return { lists };
+    const response = await fetch('/backend/lists');
+    const lists = await response.json();
+    return { lists }
 }
 
 export default function TaskManager(){

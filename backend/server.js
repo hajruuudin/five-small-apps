@@ -1,10 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const {Middleware} = require('./utils/Middleware')
+const taskRouter = require('./routes/taskRouter')
+const listRouter = require('./routes/listRouter')
 
 const app = express();
+app.use(cors())
 
-const dbConnection = mongoose.connect('mongodb://localhost:27017/task-manager')
+mongoose.connect('mongodb://localhost:27017/task-manager')
  .then(() => {
     console.log("Db Connection made to task-manager")
  })
@@ -13,8 +17,10 @@ const dbConnection = mongoose.connect('mongodb://localhost:27017/task-manager')
     console.log("Error while connecting to mongo-db")
  })
 
+app.use('/backend/tasks', taskRouter)
+app.use('/backend/lists', listRouter)
 
-app.get("/", Middleware.test, (req, res, next) => {
+app.get("/backend", Middleware.test, (req, res, next) => {
     res.send("<h1>Server is working</>")
 })
 
