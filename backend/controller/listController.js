@@ -11,6 +11,19 @@ const ListController = {
         const { listId } = req.params;
         const targetList = await List.findById(listId).populate('tasks');
         res.json(targetList);
+    },
+
+    addList: async (req, res) => {
+        const { list } = req.body;
+        const newList = new List(list);
+        await newList.save();
+        res.status(200).json(newList._id)
+    },
+
+    deleteById: async (req, res) => {
+        const { listId } = req.params;
+        await List.findOneAndDelete({_id: listId});
+        res.status(200).json(`Deleted List with id: ${listId}`)
     }
 }
 

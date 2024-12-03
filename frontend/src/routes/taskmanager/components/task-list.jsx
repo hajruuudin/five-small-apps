@@ -2,7 +2,7 @@ import { useLoaderData, useNavigate, useOutletContext, useParams, redirect } fro
 import TaskListTitle from "./task-list-card"
 import TaskCard from "./task-card";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import useTasks from "../hooks/useTasks";
 
 export async function loader({params}){
     const listId = params.listId;
@@ -16,42 +16,11 @@ export default function TaskList(){
     const loaderData = useLoaderData();
     const [taskList, setTaskList] = useState(loaderData.taskList)
     const navigate = useNavigate();
+    const {setComplete, setIncomplete, deleteTask} = useTasks();
 
     useEffect(() => {
         setTaskList(loaderData.taskList);
     }, [loaderData]);
-
-    const setComplete = async (taskId) => {
-        const response = await fetch(`/backend/tasks/${taskId}/complete`, { method: "PATCH" });
-
-        setTaskList((prevList) => ({
-            ...prevList,
-            tasks: prevList.tasks.map((task) =>
-                task._id === taskId ? { ...task, status: true } : task
-            ),
-        }));
-    };
-    
-    const setIncomplete = async (taskId) => {
-        const response = await fetch(`/backend/tasks/${taskId}/incomplete`, { method: "PATCH" });
-
-        setTaskList((prevList) => ({
-            ...prevList,
-            tasks: prevList.tasks.map((task) => 
-                task._id === taskId ? { ...task, status: false } : task
-            ),
-        }));
-    };
-
-    const deleteTask = async (taskId) => {
-        const response = await fetch(`/backend/tasks/${taskId}`, { method: "DELETE" });
-
-        setTaskList((prevList) => ({
-            ...prevList,
-            tasks: prevList.tasks.filter(task => task._id !== taskId)
-        }));
-    }
-
 
     return (
         <>
@@ -68,9 +37,9 @@ export default function TaskList(){
                     return <TaskCard
                         key={task._id} 
                         task={task}
-                        setComplete={() => setComplete(task._id)}
-                        setIncomplete={() => setIncomplete(task._id)}
-                        deleteTask={() => deleteTask(task._id)}
+                        setComplete={() => setComplete(task._id, setTaskList)}
+                        setIncomplete={() => setIncomplete(task._id, setTaskList)}
+                        deleteTask={() => deleteTask(task._id, listId, setTaskList)}
                     />;
                 })
             )}

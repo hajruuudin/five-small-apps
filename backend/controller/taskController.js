@@ -1,4 +1,3 @@
-// TO-DO: Implement functionalities and logic from the routes
 const Task = require('../models/task');
 const List = require('../models/list')
 
@@ -26,8 +25,24 @@ const TaskController = {
 
     findAndDelete: async (req, res) => {
         const { taskId } = req.params;
-        await Task.findByIdAndDelete(taskId)
-        res.status(200).json("Deleted")
+        const { list } = req.body;
+
+        console.log(taskId)
+        console.log(list)
+
+        try {
+            const deletedTask = await Task.findByIdAndDelete(taskId);
+    
+            const updatedList = await List.findByIdAndUpdate(
+                list,
+                { $pull: { tasks: taskId} },
+                { new: true }
+            );
+    
+            res.status(200).json({ message: 'Task deleted successfully', updatedList });
+        } catch (err) {
+            res.status(500).json({ message: 'Error deleting task', error: err });
+        }
     },
 
     addTask: async (req, res) => {
