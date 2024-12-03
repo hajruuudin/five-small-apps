@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const useTasks = () => {
     const setComplete = async (taskId, setTaskList) => {
         const response = await fetch(`/backend/tasks/${taskId}/complete`, {method: "PATCH"});
@@ -33,6 +35,7 @@ const useTasks = () => {
         });
 
         if(response.ok){
+            toast.success("Task deleted")
             setTaskList((previousList) => ({
                 ...previousList, // Preserve the other state properties
                 tasks: previousList.tasks.filter((task) => task._id !== taskId),

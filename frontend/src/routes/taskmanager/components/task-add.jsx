@@ -1,4 +1,6 @@
 import { Form, useParams, redirect } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export async function action({ request, params }) {
     const formData = await request.formData();
@@ -20,7 +22,9 @@ export async function action({ request, params }) {
     });
 
     if (response.ok) {
+        toast.success(`'${newTask.title}' added!`);
         return redirect(`/taskmanager/${params.listId}`);
+        
     } else {
         throw new Error("Failed to add task");
     }
