@@ -2,14 +2,14 @@ import { Form, redirect, useNavigate, useParams } from "react-router-dom"
 
 export async function action({params}){
     const listId = params.listId;
-    console.log('DELETEING')
-        const allLists = JSON.parse(localStorage.getItem("taskManager"));
 
-        const updatedLists = allLists.filter(list => list.id !== listId)
+    const response = fetch(`/backend/lists/${listId}`, {method: "DELETE"})
 
-        localStorage.setItem("taskManager", JSON.stringify(updatedLists));
-
+    if(response){
         return redirect('/taskmanager')
+    } else {
+        return new Error();
+    }
 }
 
 export default function ListDeleteForm(){

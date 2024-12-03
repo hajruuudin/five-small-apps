@@ -3,26 +3,25 @@ import { Form, redirect } from "react-router-dom";
 export async function action({request}){
     const formData = await request.formData();
 
-    if(formData == null){
-        alert("You must add something!")
-        return;
-    }
-
     const newList = {
-        "id" : crypto.randomUUID(),
         "listName" : formData.get("listName"),
         "tasks" : []
     };
 
-    console.log(newList)
+    const response = await fetch(`/backend/lists/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            list: newList
+        }),
+    });
 
-    const storageLists = JSON.parse(localStorage.getItem("taskManager")) || []
-    console.log(storageLists)
-    
-    storageLists.push(newList);
-    localStorage.setItem("taskManager", JSON.stringify(storageLists));
-
-    return redirect(`/taskmanager/${newList.id}`);
+    if (response.ok) {
+        const listId = await response.json();
+        return redirect(`/taskmanager/${listId}`);
+    } else {
+        throw new Error("Failed to add new List");
+    }
 }
 
 export default function ListAddForm(){
