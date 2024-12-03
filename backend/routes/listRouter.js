@@ -8,4 +8,7 @@ const listRouter = express.Router({mergeParams: true});
 listRouter.route("/")
     .get(catchAsync(ListController.findAll))
 
+listRouter.route("/:listId")
+    .get(catchAsync(ListController.findById))
+
 module.exports = listRouter;

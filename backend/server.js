@@ -7,6 +7,8 @@ const listRouter = require('./routes/listRouter')
 
 const app = express();
 app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 mongoose.connect('mongodb://localhost:27017/task-manager')
  .then(() => {
@@ -31,7 +33,7 @@ app.use((err, req, res, next) => {
 })
 
 app.all("*", (req, res, next) => {
-    next( new Error("ERROR SOMEWHERE"))
+    next( new Error("ERROR SOMEWHERE", error))
 })
 
 app.listen('8080', () => {

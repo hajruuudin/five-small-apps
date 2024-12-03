@@ -1,35 +1,29 @@
 import { Form, useParams, redirect } from "react-router-dom";
-import { toast } from "react-toastify";
 
-export async function action({request, params}){
+export async function action({ request, params }) {
     const formData = await request.formData();
-    if(formData == null){
-        alert("You must add something!")
-        return;
-    }
 
     const newTask = {
-        "id" : crypto.randomUUID(),
-        "title" : formData.get("title"),
-        "description" : formData.get("description"),
-        "priority" : formData.get("priority"),
-        "status" : false
+        title: formData.get("title"),
+        description: formData.get("description"),
+        priority: formData.get("priority"),
+        status: false,
     };
 
-    const listId = params.listId; 
+    const response = await fetch(`/backend/tasks/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            task: newTask,
+            list: params.listId,
+        }),
+    });
 
-    const storageTasks = JSON.parse(localStorage.getItem("taskManager"))
-    for(let i = 0; i < storageTasks.length; i++){
-        if(storageTasks[i].id === listId){
-            console.log(storageTasks[i].id)
-            storageTasks[i].tasks.push(newTask)
-            console.log(storageTasks[i].tasks)
-        }
+    if (response.ok) {
+        return redirect(`/taskmanager/${params.listId}`);
+    } else {
+        throw new Error("Failed to add task");
     }
-
-    toast("Task added")
-    localStorage.setItem("taskManager", JSON.stringify(storageTasks))
-    return redirect(`/taskmanager/${listId}`)
 }
 
 export default function TaskAddForm(){

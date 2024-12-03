@@ -5,6 +5,12 @@ const ListController = {
     findAll : async (req, res) => {
         const lists = await List.find({});
         res.json(lists);
+    },
+
+    findById: async (req, res) => {
+        const { listId } = req.params;
+        const targetList = await List.findById(listId).populate('tasks');
+        res.json(targetList);
     }
 }
 
