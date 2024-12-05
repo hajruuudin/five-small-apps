@@ -20,6 +20,18 @@ const ListController = {
         res.status(200).json(newList._id)
     },
 
+    editList: async (req, res) => {
+        try{
+            const listId = req.params.listId;
+            console.log(listId)
+            const { newListName } = req.body;
+            const editedList = await List.findByIdAndUpdate(listId, {listName: newListName}, {new: true})
+            res.status(200).json({message: `List ${editedList.listName} edited!`});
+        } catch (error) {
+            res.status(500).json({error: "Internal server error"});
+        }
+    },
+
     deleteById: async (req, res) => {
         const { listId } = req.params;
         await List.findOneAndDelete({_id: listId});

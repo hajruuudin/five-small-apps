@@ -12,5 +12,6 @@ listRouter.route("/")
 listRouter.route("/:listId")
     .get(catchAsync(ListController.findById))
     .delete(catchAsync(ListController.deleteById))
+    .put(catchAsync(ListController.editList))
 
 module.exports = listRouter;

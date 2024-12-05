@@ -16,7 +16,9 @@ import TaskAddForm, {action as taskAddAction} from './routes/taskmanager/compone
 import ListAddForm, {action as listAddAction} from './routes/taskmanager/components/task-list-add'
 import ListDeleteForm, {action as deleteAction} from './routes/taskmanager/components/task-list-delete'
 import { Slide, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
+import TaskEditForm, {loader as taskLoader, action as taskEditAction} from './routes/taskmanager/components/task-edit'
+import ListEditForm, {loader as listLoader, action as listEditAction} from './routes/taskmanager/components/task-list-edit'
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,12 @@ const router = createBrowserRouter([
         action: listAddAction
       },
       {
+        path: ":listId/edit",
+        element: <ListEditForm />,
+        loader: listLoader,
+        action: listEditAction
+      },
+      {
         path: ":listId/deleteConfirm",
         element: <ListDeleteForm />,
         children: [
@@ -55,6 +63,12 @@ const router = createBrowserRouter([
             action: deleteAction,
           },
         ]
+      },
+      {
+        path: ":listId/:taskId/edit",
+        element: <TaskEditForm />,
+        loader: taskLoader,
+        action: taskEditAction
       }
     ]
   },

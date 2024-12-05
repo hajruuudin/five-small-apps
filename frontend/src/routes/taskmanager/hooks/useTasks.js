@@ -43,7 +43,14 @@ const useTasks = () => {
         }
     };
 
-    return { setComplete, setIncomplete, deleteTask };
+    const editTask = async (taskId, setTaskList) => {
+        const response = await fetch(`/backend/tasks/${taskId}/edit`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" }
+        })
+    }
+
+    return { setComplete, setIncomplete, deleteTask, editTask };
 };
 
 export default useTasks;

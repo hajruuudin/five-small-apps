@@ -1,57 +1,47 @@
 import { useState } from "react";
-import { Form, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-
-// FIX: PADDING, LIST TOGGLE, AND BUTTON
-export default function Sidebar({ allLists }) {
+export default function Sidebar({ allLists, isOpen, setIsOpen }) {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
-            {/* Sidebar */}
             <section
                 id="sidebar"
-                className={`fixed md:relative bg-blue-900 h-screen flex flex-col p-2 z-10
-                    ${isOpen ? "w-64" : "w-0 p-0 md:w-64"}
+                className={`fixed md:relative bg-dark-sidebar h-screen flex flex-col z-10
+                    ${isOpen ? "w-80" : "w-0 p-0 md:w-80"}
                     transition-all duration-300 ease-in-out overflow-hidden`}
             >
                 <h1
-                    className="text-4xl m-6 montserrat-bold cursor-pointer"
+                    className="text-4xl text-center m-6 mb-0 montserrat-bold cursor-pointer"
                     onClick={() => navigate("/taskmanager")}
                 >
                     Task Manager
                 </h1>
 
-                <Form className="flex flex-col items-center">
-                    <div className="flex items-center">
-                        <input
-                            type="text"
-                            className="rounded-l-md p-2 w-full text-blue-800"
-                            placeholder="Search all tasks..."
-                        />
-                        <button className="bg-blue-600 text-white rounded-r-md p-2">Go</button>
-                    </div>
-                </Form>
+                <div className="bg-white h-8 rounded-md m-3 flex justify-center items-center montserrat-bold text-black">
+                    Three Small Apps
+                </div>
 
                 <nav
                     id="sidebar-links"
-                    className="flex grow flex-col items-start justify-start pt-6 pl-4 pr-4 text-1.5xl overflow-y-auto"
+                    className="flex grow flex-col items-start justify-start items-center pt-6 pl-4 pr-4 text-1.5xl overflow-y-auto"
                 >
-                    <h3 className="text-3xl montserrat-bold">Your lists:</h3>
+                    <h3 className="text-3xl text-center montserrat-bold border-b-2 rounded-md mb-3">Your lists</h3>
                     {allLists && Object.keys(allLists).length > 0 ? (
                         Object.values(allLists).map((list) => {
                             return (
                                 <NavLink
                                     key={list._id}
                                     to={`/taskmanager/${list._id}`}
+                                    onClick={() => setIsOpen(!isOpen)}
                                     className={({ isActive }) =>
                                         isActive
                                             ? "flex justify-between items-center w-full mt-1 mb-1 pb-1 font-bold text-grey-600"
                                             : "flex justify-between items-center w-full mt-1 mb-1 pb-1 opacity-60"
                                     }
                                 >
-                                    <span>{list.listName}</span>
+                                    <span className="text-xl">{list.listName}</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
@@ -74,22 +64,25 @@ export default function Sidebar({ allLists }) {
                         </p>
                     )}
                     <button
-                        onClick={() => navigate("addList")}
-                        className="p-2 mt-2 rounded-md bg-blue-600 montserrat-bold w-full"
+                        onClick={() => {
+                            navigate("addList");
+                            setIsOpen(!isOpen);
+                        }}
+                        className="p-2 mt-2 rounded-md bg-tones-velvet montserrat-bold w-full"
                     >
                         + Add List
                     </button>
                 </nav>
 
-                <div className="justify-self-end flex flex-row justify-center items-center mt-10 mb-2">
+                <div className="justify-self-end flex flex-row justify-center items-center mt-10 m-2">
                     <button
-                        className="p-4 grow rounded-l-md bg-blue-600 montserrat-bold"
+                        className={`p-4 grow bg-tones-velvet montserrat-bold ${isOpen ? "rounded-l-md" : "rounded-md"}`}
                         onClick={() => navigate("/")}
                     >
                         To Homepage
                     </button>
                     <button
-                        className="p-4 rounded-r-md bg-blue-500 montserrat-bold"
+                        className="p-4 rounded-r-md bg-tones-blood montserrat-bold md:hidden"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         <svg
@@ -122,9 +115,10 @@ export default function Sidebar({ allLists }) {
                 </div>
             </section>
 
-            {/* Toggle Button */}
+        
+            {!isOpen ? (
             <button
-                className="p-4 rounded-r-md bg-blue-500 montserrat-bold fixed left-0 bottom-10 z-20 md:hidden"
+                className="p-4 rounded-r-md bg-tones-velvet montserrat-bold fixed left-0 bottom-10 md:hidden"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <svg
@@ -154,6 +148,7 @@ export default function Sidebar({ allLists }) {
                     />
                 </svg>
             </button>
+            ):<></>}
         </>
     );
 }

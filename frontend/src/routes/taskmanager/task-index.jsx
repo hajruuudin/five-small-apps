@@ -6,7 +6,6 @@ export default function TaskIndex(){
             <h3 className="text-3xl montserrat-bold mt-6">Features</h3>
             <ul className="flex flex-col items-center">
                 <li>- Add Tasks to lists along with information about the tasks -</li>
-                <li>- Search all tasks in your storage -</li>
                 <li>- Add lists to organise tasks -</li>
                 <li>- Basic CRUD operation for tasks -</li>
             </ul>

@@ -15,6 +15,8 @@ taskRouter.route("/:taskId/incomplete")
 
 taskRouter.route("/:taskId")
     .delete(catchAsync(TaskController.findAndDelete))
+    .get(catchAsync(TaskController.findById))
+    .put(catchAsync(TaskController.editTask))
 
 
 
