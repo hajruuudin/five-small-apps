@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
 })
 
 app.all("*", (req, res, next) => {
-    next( new Error("ERROR SOMEWHERE", error))
+    next( new Error("ERROR SOMEWHERE"))
 })
 
 app.listen('8080', () => {

@@ -6,13 +6,13 @@ export default function Homepage(){
             <h1 className="montserrat-bold text-4xl">Three React Apps!</h1>
             <div className="navigation montserrat-regular m-4">
                 <Link to="/taskmanager">
-                    <button className="p-8 rounded-md m-4 bg-blue-900 hover:bg-blue-700 transition">Task Manager</button>
+                    <button className="p-8 rounded-md m-4 bg-tones-velvet hover:bg-tones-pale transition">Task Manager</button>
                 </Link>
                 <Link to="/quizapp">
-                    <button className="p-8 rounded-md m-4 bg-blue-900 hover:bg-blue-700 transition">Quiz App</button>
+                    <button className="p-8 rounded-md m-4 bg-tones-velvet hover:bg-tones-pale transition opacity-75">Quiz App - WIP</button>
                 </Link>
                 <Link to="/tictactoe">
-                    <button className="p-8 rounded-md m-4 bg-blue-900 hover:bg-blue-700 transition">TicTacToe Game</button>
+                    <button className="p-8 rounded-md m-4 bg-tones-velvet hover:bg-tones-pale transition opacity-75">TicTacToe Game - WIP</button>
                 </Link>
             </div>
         </main>
